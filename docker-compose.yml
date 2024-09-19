@@ -1,30 +1,46 @@
-# Docker compose file for building docker images and running locally
-
-version: '3.8'
+# Define the version of the Docker Compose file format
+version: "3.8"
 
 services:
+  # Define the book_catalog service
   book_catalog:
+    # Specify the build configuration for the service
     build:
-     context: ./book_catalog
-     dockerfile: Dockerfile
+      # Set the context directory for building the Docker image
+      context: ./book_catalog
+      # Specify the Dockerfile to be used for building the image
+      dockerfile: Dockerfile
+    # Map port 8001 on the host to port 80 in the container
     ports:
-      - "8001:80"
+      - "80:80"
+    # Define environment variables for the container
     environment:
-      - DATABASE_URL=postgresql://sit722week7taskp_user:WH5Se3wBue7Yc3ngoY0JvHZNfPvozTeN@dpg-crl5egd6l47c73frsss0-a.oregon-postgres.render.com/sit722week7taskp
+      # Set the DATABASE_URL environment variable for the PostgreSQL connection
+      - DATABASE_URL=postgresql://task722_user:LBu8LBTYX8au2U41YGFNPLnRDj6L9wbr@dpg-crlc6vrtq21c73ecb7fg-a.oregon-postgres.render.com/task722
+    # Attach this service to the app-networks network
     networks:
       - app-networks
 
+  # Define the inventory_management service
   inventory_management:
+    # Specify the build configuration for the service
     build:
-     context: ./inventory_management
-     dockerfile: Dockerfile
+      # Set the context directory for building the Docker image
+      context: ./inventory_management
+      # Specify the Dockerfile to be used for building the image
+      dockerfile: Dockerfile
+    # Map port 8002 on the host to port 80 in the container
     ports:
-      - "8002:80"
+      - "81:81"
+    # Define environment variables for the container
     environment:
-     - DATABASE_URL=postgresql://sit722week7taskp_user:WH5Se3wBue7Yc3ngoY0JvHZNfPvozTeN@dpg-crl5egd6l47c73frsss0-a.oregon-postgres.render.com/sit722week7taskp
+      # Set the DATABASE_URL environment variable for the PostgreSQL connection
+      - DATABASE_URL=postgresql://task722_user:LBu8LBTYX8au2U41YGFNPLnRDj6L9wbr@dpg-crlc6vrtq21c73ecb7fg-a.oregon-postgres.render.com/task722
+    # Attach this service to the app-networks network
     networks:
       - app-networks
 
+# Define the network used by both services, using the bridge driver
 networks:
   app-networks:
     driver: bridge
